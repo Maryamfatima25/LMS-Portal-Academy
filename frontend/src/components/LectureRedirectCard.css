@@ -1,0 +1,171 @@
+/*
+=====================================================
+Enhanced Styles for LectureRedirectCard Component
+=====================================================
+*/
+
+/* Main Container */
+.lecture-card-container {
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 24px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+    overflow: hidden;
+    min-height: 250px; /* Ensures consistent height */
+  }
+  
+  /* Visual Side (Left) */
+  .lecture-card-visual {
+    width: 35%; /* Takes up a portion of the card */
+    background: linear-gradient(160deg, #1e3a8a 0%, #3b82f6 100%); /* Deep blue gradient */
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #ffffff;
+    position: relative;
+  }
+  
+  /* Decorative background elements */
+  .lecture-card-visual::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    transition: all 0.5s ease;
+  }
+  
+  .lecture-card-container:hover .lecture-card-visual::before {
+    transform: scale(1.2);
+  }
+  
+  .visual-content {
+    position: relative; /* Ensure content is above decorative elements */
+  }
+  
+  .visual-icon {
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+  
+  .visual-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  .visual-subtitle {
+    font-size: 14px;
+    margin-top: 8px;
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+  
+  /* Content Side (Right) */
+  .lecture-card-content {
+    width: 65%;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Subject Selector (retains previous style name for compatibility) */
+  .subject-select-wrapper-sm {
+    align-self: flex-end; /* Pushes selector to the top right */
+  }
+  .subject-select-sm {
+    font-size: 14px; font-weight: 500; color: #334155;
+    background-color: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 8px;
+    padding: 6px 32px 6px 12px; appearance: none; -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%239ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1em;
+    transition: all 0.2s ease;
+  }
+  .subject-select-sm:hover { border-color: #cdd6e4; }
+  .subject-select-sm:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); }
+  
+  /* Lecture Details */
+  .lecture-topic-pill {
+    font-size: 12px; font-weight: 500; text-transform: uppercase;
+    color: #312e81; /* indigo-900 */
+    background-color: #e0e7ff; /* indigo-100 */
+    padding: 4px 10px; border-radius: 20px;
+  }
+  
+  .lecture-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 8px;
+    line-height: 1.3;
+  }
+  
+  .lecture-details-grid {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .lecture-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #64748b;
+  }
+  
+  /* Redirect Button */
+  .watch-lecture-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #4f46e5; /* indigo-600 */
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(79, 70, 229, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  
+  .watch-lecture-button:hover {
+    background-color: #4338ca; /* indigo-700 */
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(79, 70, 229, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .lecture-card-container {
+      flex-direction: column;
+    }
+    .lecture-card-visual, .lecture-card-content {
+      width: 100%;
+    }
+    .lecture-card-visual {
+      padding: 24px;
+      text-align: center;
+    }
+    .lecture-card-content {
+      padding: 24px;
+    }
+    .subject-select-wrapper-sm {
+      align-self: stretch; /* Full width on mobile */
+      margin-bottom: 24px;
+    }
+    .subject-select-sm {
+      width: 100%;
+    }
+    .visual-title { font-size: 24px; }
+    .lecture-title { font-size: 20px; }
+  }
+  
