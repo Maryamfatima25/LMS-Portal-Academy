@@ -1,84 +1,85 @@
-import { Mail, GraduationCap, Users } from 'lucide-react';
+import { Lightbulb } from 'lucide-react';
+// You can use the same graphic or a different one for teachers
+import teacherGraphic from '../teacher/IntroCardPic.jpeg';
 
 const TeacherIntroductionCard = () => {
-  // Mock teacher data
   const teacher = {
     name: 'Dr. Sarah Johnson',
-    email: 'sarah.johnson@academy.edu',
-    education: 'Ph.D. in Mathematics',
-    department: 'Mathematics Department',
-    profilePic: 'https://i.pravatar.cc/150?u=teacher001',
-    coverImage: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=2128&auto=format&fit=crop',
   };
+  const titleAndLastName = `Dr. ${teacher.name.split(' ').slice(1).join(' ')}`;
+
+  // MODIFIED: Teacher-centric motivational quotes
+  const quotes = [
+    { text: "The art of teaching is the art of assisting discovery.", author: "Mark Van Doren" },
+    { text: "A good teacher can inspire hope, ignite the imagination, and instill a love of learning.", author: "Brad Henry" },
+    { text: "To teach is to learn twice over.", author: "Joseph Joubert" }
+  ];
+
+  const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+  const quote = quotes[dayOfYear % quotes.length];
 
   return (
     <>
-      {/* --- Desktop View --- */}
-      <div 
-        className="hidden md:block bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden relative"
-      >
-        <div 
-          className="h-48 w-full bg-cover bg-center"
-          style={{ backgroundImage: `url(${teacher.coverImage})` }}
-        >
-          {/* The gradient overlay is crucial for text readability over a real image */}
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/60 to-transparent"></div>
-        </div>
-
-        <div className="absolute top-0 left-0 p-8 w-full h-full flex items-center">
-          <div className="flex items-center gap-6">
-            {/* Profile Picture */}
-            <img
-              src={teacher.profilePic}
-              alt="Teacher Profile"
-              className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
-            />
-            
-            {/* Teacher Info */}
+      {/* --- Desktop View (Mirrors Student Card Layout) --- */}
+      <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-gray-200 py-4 px-6 h-full">
+        <div className="flex items-center justify-between h-full">
+          {/* Left Side: All Text Content */}
+          <div className="flex flex-col h-full justify-between">
+            {/* Top: Welcome Text */}
             <div>
-              <h2 className="text-3xl font-bold text-white">{teacher.name}</h2>
-              
-              <div className="mt-4 flex flex-col gap-3 text-gray-200">
-                <div className="flex items-center gap-3">
-                  <Mail size={16} />
-                  <span>{teacher.email}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <GraduationCap size={16} />
-                  <span>{teacher.education}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Users size={16} />
-                  <span>{teacher.department}</span>
+              <h1 className="text-2xl font-bold text-gray-800">
+                Welcome back,
+              </h1>
+              <h2 className="text-2xl font-extrabold mb-2">
+                <span className="bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
+                  {titleAndLastName}!
+                </span>
+              </h2>
+            </div>
+
+            {/* Middle: Motivational Quote Section */}
+            <div className="my-2">
+              <div className="flex items-start gap-2 p-2 bg-gray-50/70 rounded-lg max-w-md">
+                <Lightbulb className="text-yellow-500 mt-1 flex-shrink-0" size={16} />
+                <div>
+                  <p className="text-gray-600 italic text-xs">"{quote.text}"</p>
+                  <p className="text-right text-[10px] text-gray-400 mt-1">- {quote.author}</p>
                 </div>
               </div>
             </div>
+            
+            {/* Bottom: Placeholder for vertical spacing (no button) */}
+            <div className="h-8"></div>
+          </div>
+
+          {/* Right Side: Graphic */}
+          <div className="w-1/5">
+            <img 
+              src={teacherGraphic}
+              alt="Teacher illustration"
+              className="w-full h-auto object-contain"
+            />
           </div>
         </div>
       </div>
 
-      {/* --- Mobile View --- */}
-      <div className="md:hidden bg-white border-2 border-gray-200 rounded-2xl shadow-sm flex flex-col items-center justify-center text-center p-6">
-        <img 
-          src={teacher.profilePic}
-          alt="Teacher Profile"
-          className="w-24 h-24 rounded-full border-4 border-indigo-500 mb-4"
-        />
-        <h3 className="font-semibold text-gray-900 text-xl">{teacher.name}</h3>
-        <div className="mt-4 text-left text-gray-600 space-y-2">
-            <p className="flex items-center text-sm">
-                <Mail className="w-4 h-4 mr-2" /> 
-                {teacher.email}
-            </p>
-            <p className="flex items-center text-sm">
-                <GraduationCap className="w-4 h-4 mr-2" /> 
-                {teacher.education}
-            </p>
-            <p className="flex items-center text-sm">
-                <Users className="w-4 h-4 mr-2" /> 
-                {teacher.department}
-            </p>
-        </div>
+      {/* --- Mobile View (Mirrors Student Card Layout) --- */}
+      <div className="md:hidden bg-white rounded-2xl shadow-sm border border-gray-200 p-5 text-center">
+         <h2 className="text-2xl font-extrabold mb-2">
+             <span className="bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
+               Welcome, {titleAndLastName}!
+             </span>
+         </h2>
+         <p className="text-gray-500 text-xs mb-3 italic">
+           "{quote.text}"
+         </p>
+         <div className="w-full max-w-[150px] mx-auto">
+           <img 
+             src={teacherGraphic}
+             alt="Teacher illustration"
+             className="w-full h-auto object-contain"
+           />
+         </div>
       </div>
     </>
   );

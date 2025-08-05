@@ -1,99 +1,128 @@
-import { X, LayoutDashboard, Upload, FileText, HelpCircle, UserCheck, FolderOpen, CalendarDays, Megaphone } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { 
+  X, 
+  LayoutDashboard, 
+  Upload, 
+  FileText, 
+  HelpCircle, 
+  UserCheck, 
+  FolderOpen, 
+  CalendarDays, 
+  Megaphone,
+  Menu,
+  LogOut,
+  UserCircle as ProfileIcon // Renamed to avoid conflict
+} from 'lucide-react';
 
-const TeacherSidebar = ({ isOpen, toggleSidebar }) => {
+const TeacherSidebar = ({ onExpandChange }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const navigationLinks = [
     { href: '/teacher/dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard', active: true },
-    { href: '/teacher/upload-lectures', icon: <Upload size={20} />, label: 'Upload Lectures' },
-    { href: '/teacher/create-assignment', icon: <FileText size={20} />, label: 'Create Assignment' },
-    { href: '/teacher/create-quiz', icon: <HelpCircle size={20} />, label: 'Create Quiz' },
-    { href: '/teacher/mark-attendance', icon: <UserCheck size={20} />, label: 'Mark Attendance' },
-    { href: '/teacher/view-submissions', icon: <FolderOpen size={20} />, label: 'View Submissions' },
-    { href: '/teacher/academic-calendar', icon: <CalendarDays size={20} />, label: 'Academic Calendar' },
+    { href: '/teacher/upload-lecture', icon: <Upload size={20} />, label: 'Upload Lectures' },
+    { href: '/teacher/create-assignment', icon: <FileText size={20} />, label: 'Assignments' },
+    { href: '/teacher/create-quiz', icon: <HelpCircle size={20} />, label: 'Quizzes' },
+    { href: '/teacher/attendance', icon: <UserCheck size={20} />, label: 'Attendance' },
+    { href: '/teacher/submissions', icon: <FolderOpen size={20} />, label: 'Submissions' },
+    { href: '/teacher/calendar', icon: <CalendarDays size={20} />, label: 'Calendar' },
     { href: '/teacher/announcements', icon: <Megaphone size={20} />, label: 'Announcements' },
   ];
 
   const teacher = { 
     name: 'Dr. Sarah Johnson', 
-    profilePic: 'https://i.pravatar.cc/150?u=teacher001' 
+    profilePic: 'https://i.pravatar.cc/150?u=teacher001',
+    employeeId: 'T-98765'
   };
 
+  // Notify parent component about expansion state
+  useEffect(() => {
+    if (onExpandChange) {
+      onExpandChange(isExpanded);
+    }
+  }, [isExpanded, onExpandChange]);
+
+  const handleNavigation = (href) => {
+    navigate(href);
+  };
+  
+  const isActive = (href) => location.pathname === href;
+
   return (
-    <>
-      {/* Sidebar */}
-      <aside 
-        className={`fixed top-0 left-0 z-40 w-64 h-screen bg-white border-r border-gray-200 transition-transform duration-300 ease-in-out ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        <div className="h-full px-4 py-6 flex flex-col">
-          {/* Logo and Close button */}
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">A</span>
-              </div>
-              <span className="font-semibold text-gray-900 text-lg">Academy</span>
+    <aside 
+      className={`fixed top-0 left-0 z-40 h-screen transition-all duration-300 ease-in-out ${
+        isExpanded ? 'w-64' : 'w-20'
+      } bg-gradient-to-b from-blue-600 to-indigo-700 shadow-lg`}
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
+    >
+      <div className="h-full flex flex-col">
+        <div className="flex items-center justify-between p-4 border-b border-blue-500/30">
+          <div className={`flex items-center gap-3 transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>
+            <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">A</span>
             </div>
-            <button 
-              onClick={toggleSidebar} 
-              className="p-1 rounded-lg hover:bg-gray-100 md:hidden"
-            >
-              <X size={20} className="text-gray-600" />
-            </button>
+            {isExpanded && (
+              <span className="font-semibold text-white text-lg">Academy</span>
+            )}
+          </div>
+          {!isExpanded && (
+            <div className="w-8 h-8 flex items-center justify-center">
+              <Menu size={20} className="text-white" />
+            </div>
+          )}
+        </div>
+
+        <nav className="flex-1 py-4">
+          <ul className="space-y-1 px-2">
+            {navigationLinks.map((link) => (
+              <li key={link.label}>
+                <button
+                  onClick={() => handleNavigation(link.href)}
+                  className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 group ${
+                    isActive(link.href) 
+                      ? 'bg-white/20 text-white' 
+                      : 'text-blue-100 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  <div className="flex-shrink-0">{link.icon}</div>
+                  <span className={`transition-all duration-300 whitespace-nowrap ${isExpanded ? 'opacity-100 max-w-xs' : 'opacity-0 max-w-0 overflow-hidden'}`}>
+                    {link.label}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="p-4 border-t border-blue-500/30">
+          <div className="flex items-center gap-3">
+            <img src={teacher.profilePic} alt="User" className="w-10 h-10 rounded-full border-2 border-white/30" />
+            {isExpanded && (
+              <div className="transition-all duration-300">
+                <p className="font-semibold text-white text-sm truncate">{teacher.name}</p>
+                <p className="text-blue-200 text-xs truncate">ID: {teacher.employeeId}</p>
+              </div>
+            )}
           </div>
           
-          {/* Navigation */}
-          <nav className="flex-grow">
-            <ul className="space-y-2">
-              {navigationLinks.map((link) => (
-                <li key={link.label}>
-                  <a 
-                    href={link.href}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors group ${
-                      link.active 
-                        ? 'bg-indigo-50 text-indigo-600 font-semibold' 
-                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                    }`}
-                  >
-                    {/* Desktop: Show icon and text */}
-                    <span className="md:block">{link.icon}</span>
-                    <span className="md:block">{link.label}</span>
-                    
-                    {/* Mobile: Show only icons when collapsed */}
-                    <span className="md:hidden block">{link.icon}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          {/* Teacher Profile */}
-          <div className="mt-auto">
-            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-              <img 
-                src={teacher.profilePic} 
-                alt="Teacher" 
-                className="w-10 h-10 rounded-full" 
-              />
-              <div className="md:block">
-                <p className="font-semibold text-sm text-gray-900">{teacher.name}</p>
-                <a href="#" className="text-xs text-gray-500 hover:text-indigo-600">
-                  View Profile
-                </a>
-              </div>
+          {isExpanded && (
+            <div className="mt-3 space-y-1">
+              <button className="w-full flex items-center gap-3 px-3 py-2 text-blue-100 hover:bg-white/5 hover:text-white rounded-lg transition-colors">
+                <ProfileIcon size={16} />
+                <span>Profile</span>
+              </button>
+              <button className="w-full flex items-center gap-3 px-3 py-2 text-red-200 hover:bg-red-500/20 hover:text-red-100 rounded-lg transition-colors">
+                <LogOut size={16} />
+                <span>Logout</span>
+              </button>
             </div>
-          </div>
+          )}
         </div>
-      </aside>
-
-      {/* Overlay for Mobile when Sidebar is open */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/40 z-30 md:hidden" 
-          onClick={toggleSidebar}
-        />
-      )}
-    </>
+      </div>
+    </aside>
   );
 };
 
