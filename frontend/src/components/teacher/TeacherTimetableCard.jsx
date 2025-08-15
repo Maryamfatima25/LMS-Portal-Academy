@@ -40,7 +40,7 @@ const TeacherTimetableCard = () => {
 
   return (
     // Uses flex layout to control scrolling area
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 h-full flex flex-col">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 h-[320px] flex flex-col">
       <div className="flex items-center justify-between flex-shrink-0">
         <h3 className="font-semibold text-gray-900 text-lg">Class Timetable</h3>
         <button 

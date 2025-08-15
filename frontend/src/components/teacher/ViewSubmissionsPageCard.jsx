@@ -23,9 +23,9 @@ const ViewSubmissionsPageCard = () => {
     <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 h-full flex flex-col">
       {/* --- DESKTOP VIEW --- */}
       <div className="hidden md:flex flex-col h-full">
-        {/* Header - Using one of the new colors for the icon background */}
+        {/* MODIFIED: Header now uses the standard Indigo theme */}
         <div className="flex items-center gap-3 pb-4 border-b border-gray-200 flex-shrink-0">
-          <div className="w-10 h-10 bg-[#CBDCEB] text-[#133E87] rounded-full flex items-center justify-center">
+          <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center">
             <FolderOpen size={20} />
           </div>
           <div>
@@ -34,16 +34,15 @@ const ViewSubmissionsPageCard = () => {
           </div>
         </div>
 
-        {/* Filters Section */}
+        {/* Filters Section (Focus ring now uses Indigo) */}
         <div className="grid grid-cols-3 gap-3 my-4 flex-shrink-0">
-          {/* Note: Focus rings will still use the default indigo color unless you configure tailwind.config.js */}
-          <select value={selectedClass} onChange={(e) => setSelectedClass(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#608BC1]">
+          <select value={selectedClass} onChange={(e) => setSelectedClass(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
             {classes.map((cls) => (<option key={cls.id} value={cls.id}>{cls.name}</option>))}
           </select>
-          <select value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#608BC1]">
+          <select value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
             {subjects.map((sub) => (<option key={sub.id} value={sub.id}>{sub.name}</option>))}
           </select>
-          <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#608BC1]">
+          <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
             {types.map((type) => (<option key={type.id} value={type.id}>{type.name}</option>))}
           </select>
         </div>
@@ -53,36 +52,35 @@ const ViewSubmissionsPageCard = () => {
           <div className="w-full">
             <div className="flex justify-between items-end mb-1">
               <span className="text-sm font-medium text-slate-600">Submission Progress</span>
-              <span className="text-xl font-bold text-[rgb(96,139,193)]">{Math.round(submittedPercentage)}%</span>
+              {/* MODIFIED: Percentage text is now Green */}
+              <span className="text-xl font-bold text-green-600">{Math.round(submittedPercentage)}%</span>
             </div>
             <div className="w-full bg-slate-200 rounded-full h-2.5">
-              {/* MODIFIED: Progress bar with new color */}
-              <div className="h-2.5 rounded-full" style={{ width: `${submittedPercentage}%`, backgroundColor: 'rgb(96, 139, 193)' }}></div>
+              {/* MODIFIED: Progress bar is now Green */}
+              <div className="bg-green-600 h-2.5 rounded-full" style={{ width: `${submittedPercentage}%` }}></div>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mt-4 text-center">
-            {/* MODIFIED: Submitted block with new color scheme */}
-            <div className="bg-[#eef2ff] p-4 rounded-lg border border-[#c7d2fe]">
-              <FileCheck size={24} className="mx-auto text-[rgb(19,62,135)] mb-1" />
-              <p className="text-2xl font-bold text-[rgb(19,62,135)]">{currentSubmissions.submitted}</p>
-              <p className="text-xs text-slate-500 font-medium">Submitted</p>
+            {/* MODIFIED: Submitted block with Green theme */}
+            <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+              <FileCheck size={24} className="mx-auto text-green-700 mb-1" />
+              <p className="text-2xl font-bold text-green-800">{currentSubmissions.submitted}</p>
+              <p className="text-xs text-green-700 font-medium">Submitted</p>
             </div>
-            {/* MODIFIED: Pending block with new color scheme */}
-            <div className="bg-[#f0f9ff] p-4 rounded-lg border border-[#e0f2fe]">
-              <Clock size={24} className="mx-auto text-[rgb(96,139,193)] mb-1" />
-              <p className="text-2xl font-bold text-[rgb(96,139,193)]">{currentSubmissions.remaining}</p>
-              <p className="text-xs text-slate-500 font-medium">Pending</p>
+            {/* MODIFIED: Remaining block with Red theme */}
+            <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+              <Clock size={24} className="mx-auto text-red-700 mb-1" />
+              <p className="text-2xl font-bold text-red-800">{currentSubmissions.remaining}</p>
+              <p className="text-xs text-red-700 font-medium">Remaining</p>
             </div>
           </div>
         </div>
 
-        {/* Footer Button */}
+        {/* Footer Button (remains Indigo, the primary action color) */}
         <div className="mt-4 pt-4 border-t border-gray-200 flex-shrink-0">
           <button
-            // MODIFIED: Button with new color
-            className="w-full text-white font-medium py-3 rounded-lg transition-opacity hover:opacity-90"
-            style={{ backgroundColor: 'rgb(96, 139, 193)' }}
-            onClick={() => window.location.href = '/teacher/view-submissions'}
+            className="w-full bg-indigo-600 text-white font-medium py-3 rounded-lg hover:bg-indigo-700 transition-colors"
+            onClick={() => window.location.href = '/teacher/submissions'}
           >
             Review Submissions
           </button>
@@ -92,7 +90,7 @@ const ViewSubmissionsPageCard = () => {
       {/* --- MOBILE VIEW --- */}
       <div className="md:hidden flex flex-col h-full">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-[#CBDCEB] text-[#133E87] rounded-full flex items-center justify-center">
+          <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center">
             <FolderOpen size={20} />
           </div>
           <h3 className="font-semibold text-gray-900 text-lg">Submissions</h3>
@@ -101,20 +99,19 @@ const ViewSubmissionsPageCard = () => {
           <p className="text-sm font-medium text-slate-600">Class {selectedClass} - {selectedType}s</p>
           <div className="flex justify-around items-center mt-2">
             <div>
-              <p className="text-3xl font-bold text-[rgb(19,62,135)]">{currentSubmissions.submitted}</p>
+              <p className="text-3xl font-bold text-green-700">{currentSubmissions.submitted}</p>
               <p className="text-xs text-slate-500">Submitted</p>
             </div>
             <div className="w-px h-10 bg-slate-200"></div>
             <div>
-              <p className="text-3xl font-bold text-[rgb(96,139,193)]">{currentSubmissions.remaining}</p>
-              <p className="text-xs text-slate-500">Pending</p>
+              <p className="text-3xl font-bold text-red-700">{currentSubmissions.remaining}</p>
+              <p className="text-xs text-slate-500">Remaining</p>
             </div>
           </div>
         </div>
         <button
-          className="w-full text-white font-medium py-3 rounded-lg transition-opacity hover:opacity-90 mt-4"
-          style={{ backgroundColor: 'rgb(96, 139, 193)' }}
-          onClick={() => window.location.href = '/teacher/view-submissions'}
+          className="w-full bg-indigo-600 text-white font-medium py-3 rounded-lg hover:bg-indigo-700 transition-colors mt-4"
+          onClick={() => window.location.href = '/teacher/submissions'}
         >
           Review
         </button>
